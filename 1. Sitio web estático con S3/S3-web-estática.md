@@ -71,12 +71,9 @@ Y si se intenta algo inválido (Ej: url inválida):
 Se crea la distribución cloud frount. Se mantiene la configuración básica, entre las configuraciones más relevantes se destaca:
 - Origen
   - Se selecciona el bucket S3 creado anteriormente
-  - Se establece como ruta de origen el archivo "index.html"
 
 - Seguridad
   - Se desactiva WAF, este firewall es útil para proteger adecuadamente el sistema, sin embargo dado que este caso es una simple prueba se desactiva (además tiene costos adicionales)
-
-![Creación cloud front](images/S3-web/creacion-cf.png)
 
 Finalmente el servicio de cloud front fue creado y pudo accederse a la web s3 estática correctamente (nótese el cambio de nombre de dominio porque ahora se encuentra por encima la capa de CloudFront por sobre el S3):
 
