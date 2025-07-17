@@ -81,4 +81,79 @@ Finalmente el servicio de cloud front fue creado y pudo accederse a la web s3 es
 
 ![Sitio web](images/S3-web/cf-s3-sitio-web.png)
 
+## 6. Extensión. Despliegue con CDK Java
+CDK es una herramamienta que permite definir la infraestructura como código (IaC). De esta manera, para poder replicar el trabajo realizado fácilmente, se implementa el código correspondiente. El código que se explicará forma parte de la clase "Stack" que representa la infraestructura a desplegar, el código en su contexto completo puede verse en [Despliegue S3-web-estática](folder-1/folder-x/).
 
+~~~Java
+BlockPublicAccess noblock = BlockPublicAccess.Builder.create()
+    .blockPublicPolicy(false)
+    .ignorePublicAcls(false)
+    .blockPublicAcls(false)
+    .restrictPublicBuckets(false)
+    .build();
+
+// Se crea el bucket
+Bucket bucket = Bucket.Builder.create(this, "s3-cdk-web-estatico")
+    .websiteIndexDocument("index.html")
+    .websiteErrorDocument("error.html")
+    .removalPolicy(RemovalPolicy.DESTROY)
+    .autoDeleteObjects(true)
+    .blockPublicAccess(noblock)
+    .build();
+~~~
+- La variable noblock representa la desactivación del bloqueo de acceso público. Así posteriormente se definirá una política que permitirá el acceso a los objetos del bucket
+- La creación del bucket responde a la configuración que se definió con la consola
+  - Se configuran como archivos de inicio y error a "index.html" y "error.html"
+  - Algo importante a tener en cuenta es que cuando esta infraestructura se "elimine o destruya", para que el bucket también se elimine se activa la política "DESTROY" y además la eliminación de los objetos contenidos.
+
+~~~Java
+// Agregar archivos html
+BucketDeployment.Builder.create(this, "HTMLFiles")
+        .sources(List.of(Source.asset("html-files/")))
+        .destinationBucket(bucket)
+        .build();
+
+// Se agrega la política para permitir el acceso público
+bucket.addToResourcePolicy(PolicyStatement.Builder.create()
+      .effect(Effect.ALLOW)
+      .principals(List.of(new AnyPrincipal()))
+      .actions(List.of("s3:GetObject"))
+      .resources(List.of(bucket.getBucketArn() + "/*"))
+      .build()
+);
+~~~
+- A través del objeto o elemento "BucketDeployment" se realiza la carga de los archivos al bucket
+  - En este caso los archivos se almacenan en la carpeta "html-files" y se pone como destino el bucket definido anteriormente
+
+ ~~~Java
+// Se agrega la política para permitir el acceso público
+bucket.addToResourcePolicy(PolicyStatement.Builder.create()
+      .effect(Effect.ALLOW)
+      .principals(List.of(new AnyPrincipal()))
+      .actions(List.of("s3:GetObject"))
+      .resources(List.of(bucket.getBucketArn() + "/*"))
+      .build()
+);
+~~~
+- Se agrega la política que permite el acceso a los recursos
+  - La correspondencia es bastante directa. Algo quizá extraño es el uso de la clase "AnyPrincipal" que simplemente representa el comodín (*) o "cualquier usuario"
+~~~Java
+// Creación del CloudFront
+Distribution.Builder.create(this, "cf-s3-web-estatico")
+    .defaultBehavior(
+        BehaviorOptions.builder()
+            .origin(
+                new S3StaticWebsiteOrigin(
+                    bucket,
+                    S3StaticWebsiteOriginProps.builder()
+                        .build()
+                )
+            )
+            .build()
+    )
+    .build()
+    .applyRemovalPolicy(RemovalPolicy.DESTROY);
+~~~
+- Se define el CloudFront
+  - Se especifica el origen, un sitio web estático S3
+  - Se agrega nuevamente la política de "DESTROY" para eliminar el recurso al destruirse la infraestructura
