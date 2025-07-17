@@ -82,7 +82,7 @@ Finalmente el servicio de cloud front fue creado y pudo accederse a la web s3 es
 ![Sitio web](images/S3-web/cf-s3-sitio-web.png)
 
 ## 6. Extensión. Despliegue con CDK Java
-CDK es una herramamienta que permite definir la infraestructura como código (IaC). De esta manera, para poder replicar el trabajo realizado fácilmente, se implementa el código correspondiente. El código que se explicará forma parte de la clase "Stack" que representa la infraestructura a desplegar, el código en su contexto completo puede verse en [Despliegue S3-web-estática](folder-1/folder-x/).
+CDK es una herramamienta que permite definir la infraestructura como código (IaC). De esta manera, para poder replicar el trabajo realizado fácilmente, se implementa el código correspondiente. El código que se explicará forma parte de la clase "Stack" que representa la infraestructura a desplegar, el código en su contexto completo puede verse en [Despliegue S3-web-estática](CDK-CloudFormation-Deploys/s3-web-estatico-despliegue).
 
 ~~~Java
 BlockPublicAccess noblock = BlockPublicAccess.Builder.create()
