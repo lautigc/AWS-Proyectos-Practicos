@@ -1,6 +1,24 @@
 # Hospedar un sitio web estático (S3)
 El objetivo de este proyecto es el hosting de un sitio web estático a través de la consola principal utilizando principalmente el servicio de S3.
 
+
+# Índice
+  
+  [1. Creación del bucket](#1-creación-del-bucket)
+
+  [2. Configuración como sitio web estático](#2-configuración-como-sitio-web-estático)
+  
+  [3. Agregación de archivos](#3-agregación-de-archivos)
+  
+  [4. Configuración acceso público](#4-configuración-acceso-público)
+  
+  [5. Extensión con CloudFront](#5-extensión-con-cloudfront)
+  
+&nbsp;&nbsp;&nbsp;&nbsp;[5.1 Creación de distribución cloud front](#51-creación-de-distribución-cloud-front)
+  
+  [6. Extensión. Despliegue con CDK Java](#6-extensión-despliegue-con-cdk-java)
+
+
 ## 1. Creación del bucket
 Se crea un bucket con la configuración básica o por defecto. Se destacan las siguientes configuraciones:
 - Bloquear todo el acceso público
@@ -17,7 +35,7 @@ Una vez creado el bucket S3 se configura el "alojamiento de sitios web estático
 
 ![Configuración alojamiento web estático](images/S3-web/alojamiento-estático.png)
 
-### 3. Se agregan los archivos correspondientes
+### 3. Agregación de archivos
 Se agregan los archivos html básicos para el sitio web estático
 
 ![Carga archivos HTML](images/S3-web/carga-html.png)
