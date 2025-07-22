@@ -84,7 +84,7 @@ Finalmente se muestra un video con el funcionamiento del balanceador de carga
 ![Gif probando el balanceador](images/prueba-balanceador.gif)
 
 ## 5. Extensión CDK Java
-Para automatizar y poder replicar el trabajo realizado se implementa el correspondiente código al proyecto realizado.
+Para automatizar y poder replicar el trabajo realizado se implementa el correspondiente código al proyecto realizado. [Ir al código completo](../CDK-CloudFormation-Deploys/EC2-duplicados-AMI-LB).
 En primer lugar, se configuran los diferentes elementos que van a componer a la instancia EC2:
 
 ~~~Java
