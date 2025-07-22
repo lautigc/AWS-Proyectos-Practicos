@@ -1,6 +1,7 @@
 # EC2 duplicados con AMI y Load Balancer
 Este proyecto consiste en la creación de una instancia EC2 que montara un servidor HTTP básico que luego será replicada creando imágenes a través del servicio AMI y posteriormente estas múltiples instancias serán gestionadas a través de un load balancer.
 
+# Índice
 [1. Creación de la instancia EC2](#1-creación-de-la-instancia-ec2)
 
 &nbsp;&nbsp;&nbsp;&nbsp;[1.1 Creación de grupo de seguridad](#11-creación-de-grupo-de-seguridad)
