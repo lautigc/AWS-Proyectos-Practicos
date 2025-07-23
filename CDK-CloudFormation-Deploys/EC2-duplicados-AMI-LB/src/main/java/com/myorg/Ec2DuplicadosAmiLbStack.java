@@ -62,7 +62,7 @@ public class Ec2DuplicadosAmiLbStack extends Stack {
         InstanceType t2Micro = InstanceType.of(InstanceClass.T2, InstanceSize.MICRO);
 
         // Basic storage with 8GB and GP3 technology
-        // observe that path "/dev/xvda" is the root volume for AMI selected
+        // observe that path "/dev/xvda" is the root volume for selected AMI
         BlockDevice blockDevice = BlockDevice.builder()
         		.deviceName("/dev/xvda")
         		.volume(BlockDeviceVolume.ebs(
